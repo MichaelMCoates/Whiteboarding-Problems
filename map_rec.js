@@ -1,0 +1,21 @@
+// myMap
+// 10/10/2017 - David's Problem
+//
+// Implement the map function in JavaScript using recursion.
+
+const map = (fn, [first, ...rest]) =>
+	first === undefined ? [] : [fn(first), ...map(fn, rest)]
+The second solution saves space complexity by not creating a new array in each recursive call.
+
+function myMap (array, callback) {
+  const mappedArray = [...array];
+  let idx = 0;
+  const _pointerMap = () => {
+    if (idx === array.length) return;
+    mappedArray[idx] = callback(array[idx]);
+    idx += 1;
+    _pointerMap();
+  }
+  _pointerMap();
+  return mappedArray;
+}
