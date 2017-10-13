@@ -1,50 +1,63 @@
 
 
-
+# 10/12/2017
+# From Matt
 # Partition an array such that the maximum of the left subarray is less than the minimum of the right subarray
 
 def shortest_winter(array)
-  mins = array.dup
-  maxes = array.dup
+  mins = minimums_from_right(array)
+  maxes = maximums_from_left(array)
 
-  idx1 = array.length - 1
-  min = mins[idx1]
+  partition_idx = -1
 
-  while idx1 >= 0
-    if mins[idx1] < min
-      min = mins[idx1]
-    end
+  maxes.each_with_index do |left_max, max_idx|
+    break if max_idx == maxes.length - 1
 
-    mins[idx1] = min
-    idx1 -= 1
-  end
+    right_min = mins[max_idx + 1]
 
-  idx2 = 0
-  max = maxes[idx2]
-
-  while idx2 < array.length
-    if maxes[idx2] > max
-      max = maxes[idx2]
-    end
-
-    maxes[idx2] = max
-    idx2 += 1
-  end
-
-  split_idx = -1
-
-  maxes.each_with_index do |test_max, max_idx|
-    if test_max < mins[max_idx + 1]
-      split_idx = max_idx
+    if left_max < right_min
+      partition_idx = max_idx
       break
     end
   end
 
-  if split_idx == -1
-    return nil
-  else
-    return [array[0..split_idx], array[split_idx + 1...array.length]]
-  end
+  return nil if partition_idx == -1
+  [array[0..partition_idx], array[partition_idx + 1...array.length]]
 end
 
-# p shortest_winter([7, 3, 2, 1, 8, 7, 8, 12, 9])
+def minimums_from_right(array)
+  mins = array.dup
+  min_idx = mins.length - 1
+  overall_min = mins[min_idx]
+
+  while min_idx >= 0
+    if mins[min_idx] < overall_min
+      overall_min = mins[min_idx]
+    end
+
+    mins[min_idx] = overall_min
+    min_idx -= 1
+  end
+
+  mins
+end
+
+def maximums_from_left(array)
+  maxes = array.dup
+  max_idx = 0
+  overall_max = maxes[max_idx]
+
+  while max_idx < array.length
+    if maxes[max_idx] > overall_max
+      overall_max = maxes[max_idx]
+    end
+
+    maxes[max_idx] = overall_max
+    max_idx += 1
+  end
+
+  maxes
+end
+
+p shortest_winter([7, 3, 2, 1, 8, 7, 8, 12, 9])
+p shortest_winter([7, 3, 2, 1, 8, 7, 8, 12, 8])
