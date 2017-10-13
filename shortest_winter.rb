@@ -1,5 +1,3 @@
-
-
 # 10/12/2017
 # From Matt
 # Partition an array such that the maximum of the left subarray is less than the minimum of the right subarray
@@ -59,5 +57,30 @@ def maximums_from_left(array)
   maxes
 end
 
+# Matt's temp solution
+
+# def shortest_winter(array)
+#   winter = 0
+#
+#   win_max = array.shift
+#   summer = 0
+#   sum_max = nil
+#
+#   array.each do |temp|
+#     sum_max = temp unless sum_max
+#     sum_max = temp if temp > sum_max
+#
+#     if temp <= win_max
+#       summer += 1
+#       win_max = win_max > sum_max ? win_max : sum_max
+#       winter = winter + summer
+#       summer = 0
+#     end
+#   end
+#
+#   [array[0..winter], array[winter + 1...array.length]]
+# end
+
 p shortest_winter([7, 3, 2, 1, 8, 7, 8, 12, 9])
+p shortest_winter([7, 3, 2, 1, 12, 9])
 p shortest_winter([7, 3, 2, 1, 8, 7, 8, 12, 8])
