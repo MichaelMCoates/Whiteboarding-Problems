@@ -1,3 +1,5 @@
+// 10/21/2017
+// My Problem
 //check if a binary Tree is a binary Search Tree
 
 //think you coded to sooon without fully fleshing out the algorithm
